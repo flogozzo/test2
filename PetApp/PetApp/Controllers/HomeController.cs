@@ -7,7 +7,7 @@ using PetApp.Data;
 using PetApp.Services;
 using PetApp.Models;
 using PetApp.BL;
-
+using System.Threading.Tasks;
 namespace PetApp.Controllers
 {
     public class HomeController : Controller
@@ -22,12 +22,13 @@ namespace PetApp.Controllers
             _logger = logger;
             _bl = new PetsBL();
         }
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             IEnumerable<IndexViewModel> view;
             try
             {
-                view = _bl.GetPetsByOwnerGender(_repo.GetPersons(), Pet.constCAT);
+                IEnumerable<Person> persons = await _repo.GetPersons();
+                view = _bl.GetPetsByOwnerGender(persons, Pet.constCAT);
                 // log the results.
                 foreach (var p in view)
                 {

@@ -10,6 +10,7 @@ using Moq;
 using PetApp.Data;
 using PetApp.Models;
 using PetApp.Services;
+using System.Threading.Tasks;
 
 namespace PetApp.Tests.Controllers
 {
@@ -29,10 +30,9 @@ namespace PetApp.Tests.Controllers
             };
         [TestMethod]
         public void Index()
-        {
-
+        {            
             var mockRepo = new Mock<IPetAppRepository>();
-            mockRepo.Setup(x => x.GetPersons()).Returns(people);
+            mockRepo.Setup(x => x.GetPersons()).Returns(Task.FromResult(people));
 
             var mockLogger = new Mock<ILogger>();
 
@@ -40,8 +40,9 @@ namespace PetApp.Tests.Controllers
             HomeController controller = new HomeController(mockRepo.Object,mockLogger.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
-
+            var actionResultTask = controller.Index();
+            actionResultTask.Wait();
+            var result = actionResultTask.Result as ViewResult;
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("", result.ViewName);
@@ -57,12 +58,14 @@ namespace PetApp.Tests.Controllers
                         
             // Arrange
             var mockRepo = new Mock<IPetAppRepository>();
-            mockRepo.Setup(x => x.GetPersons()).Returns(people);
+            mockRepo.Setup(x => x.GetPersons()).Returns(Task.FromResult(people));
             var mockLogger = new Mock<ILogger>();
             HomeController controller = new HomeController(mockRepo.Object, mockLogger.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var actionResultTask = controller.Index();
+            actionResultTask.Wait();
+            var result = actionResultTask.Result as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -91,12 +94,14 @@ namespace PetApp.Tests.Controllers
 
             // Arrange
             var mockRepo = new Mock<IPetAppRepository>();
-            mockRepo.Setup(x => x.GetPersons()).Returns(people);
+            mockRepo.Setup(x => x.GetPersons()).Returns(Task.FromResult(people));
             var mockLogger = new Mock<ILogger>();
             HomeController controller = new HomeController(mockRepo.Object, mockLogger.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var actionResultTask = controller.Index();
+            actionResultTask.Wait();
+            var result = actionResultTask.Result as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -126,12 +131,14 @@ namespace PetApp.Tests.Controllers
 
             // Arrange
             var mockRepo = new Mock<IPetAppRepository>();
-            mockRepo.Setup(x => x.GetPersons()).Returns(people);
+            mockRepo.Setup(x => x.GetPersons()).Returns(Task.FromResult(people));
             var mockLogger = new Mock<ILogger>();
             HomeController controller = new HomeController(mockRepo.Object, mockLogger.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var actionResultTask = controller.Index();
+            actionResultTask.Wait();
+            var result = actionResultTask.Result as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

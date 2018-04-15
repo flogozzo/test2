@@ -9,7 +9,7 @@ namespace PetApp.Data
 {
     public interface IPetAppRepository
     {
-        IEnumerable<Person> GetPersons();
+        Task<IEnumerable<Person>> GetPersons();
     }
 
 

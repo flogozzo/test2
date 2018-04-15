@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using PetApp.Models;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace PetApp.Data
 {
     public class FakePetAppRepository : IPetAppRepository
     {
-        public IEnumerable<Person> GetPersons()
+        public async Task<IEnumerable<Person>> GetPersons()
         {
             IEnumerable<Person> persons = null;
 

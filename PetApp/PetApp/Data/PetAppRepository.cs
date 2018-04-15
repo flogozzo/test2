@@ -5,6 +5,7 @@ using System.Web;
 using PetApp.Models;
 using System.Net.Http;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace PetApp.Data
 {
@@ -16,23 +17,23 @@ namespace PetApp.Data
         {
             dataSourceUrl=  ConfigurationManager.AppSettings["DataSourceUrl"];
         }
-        public IEnumerable<Person> GetPersons()
+        public async Task<IEnumerable<Person>> GetPersons()
         {
             IEnumerable<Person> persons = null;
 
             using (var client = new HttpClient())
             {
                 
-                var responseTask = client.GetAsync(dataSourceUrl);
-                responseTask.Wait();
+                var responseTask =  client.GetAsync(dataSourceUrl);
+                await responseTask;
 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<IList<Person>>();
-                    readTask.Wait();
+                    var readTask = await result.Content.ReadAsAsync<IList<Person>>();
+                    //await readTask;
 
-                    persons = readTask.Result;
+                    persons = readTask;
                 }
                 
             }
