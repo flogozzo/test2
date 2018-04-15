@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PetApp.Models.IndexViewModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<table class="table">
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerGender)
+            </td>
+        </tr>
+        foreach (var pet in item.Pets)
+        {
+        <tr>
+            <td >
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => pet.Name)
+            </td>
+        </tr>
+        }
+    }
+    </div>
